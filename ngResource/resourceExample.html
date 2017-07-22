@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ngResource Example</title>
+	<meta charset="UTF-8">
+	<style>
+
+	   #all-comments
+		{
+			border: 8px solid blue;
+			padding: 10px;
+			margin: 12px;
+		}
+		#single-comment
+		{
+
+			border: 2px solid blue;
+			padding: 5px;
+			margin: 10px;
+		}
+		
+	</style>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script>
+		var app = angular.module('myapp',['ngResource']);
+		app.factory('Entry' , function($resource)
+		{
+            return $resource('http://localhost:3000/employees/:id', {},
+             {
+             	'update': { method:'PUT',
+             				url: 'http://localhost:3000/employees/:id' }
+             });
+
+            return $resource('http://localhost:3000/employees/:id' ,{},
+            {
+            	'save':{method:'POST' ,
+                    url:'http://localhost:3000/employees/:id'}
+            });
+		});
+
+		app.controller('restcontroller', function($scope , Entry) {
+	       
+	        $scope.entries= null;
+		 	$scope.singleComment = null;
+			 	 	
+		 	$scope.updatedperson={};
+		 	$scope.postperson={};
+
+		 	$scope.fetch = function(id) {
+		 		$scope.person = Entry.get({id:$scope.id});
+		 	};
+
+		 	$scope.edit = function(id) {
+		 		$scope.editperson = Entry.get({id:$scope.id});
+		 		// console.log($scope.editperson);
+		 	};		
+
+		 	$scope.update =function() {
+		 		alert("update successfully");
+		 		var updatedperson = Entry.get({id:$scope.id});
+		 		//console.log($scope.updatedperson);
+		 		updatedperson.name = $scope.editperson.name;
+		 		updatedperson.email = $scope.editperson.email;
+		 		updatedperson.location = $scope.editperson.location;
+		 		updatedperson.profession = $scope.editperson.profession;
+		 		updatedperson.phone = $scope.editperson.phone;
+                console.log(updatedperson);
+		 	    updatedperson.$update({ id:$scope.id }) ;// function() {}, function(){});
+		 	};
+
+		 	$scope.post = function()
+		 	{
+		 		  alert("post function is called");
+		 		  var postperson = new Entry();
+		 		  console.log($scope.postperson);
+		 		  postperson.name = $scope.name;
+		 		  postperson.email = $scope.email;
+		 		  postperson.profession = $scope.profession;
+		 		  postperson.location = $scope.location;
+		 		  postperson.phone = $scope.phone;
+		 	      console.log(postperson);
+		 	      postperson.$save();
+	         };
+
+		 	$scope.deleteComment = function(){
+
+		 		Entry.delete({id:$scope.id},function() {
+		 			alert("comment delete request sent");
+		 		})
+		 	};
+
+		 	$scope.fetchAll = function() {
+		 		$scope.entries = Entry.query();
+		 		/*console.log($scope.entries);*/
+		 	};
+
+		 });
+    </script>
+</head>
+<body data ng-app="myapp">
+<div ng-controller="restcontroller" >
+		
+	<button ng-click="fetchAll()" style="background-color: red; padding: 8px; margin: 4px; border: 8px;">Fetch All</button>
+	<table border="6" cellspacing="8" cellpadding="12" id="all-comments" style="color: red">
+		<tr>
+		     <th>id</th>
+			 <th>Name</th>
+			 <th>Email</th>
+			 <th>profession</th>
+			 <th>Location</th>
+			 <th>phone</th>
+	    </tr>
+
+		<tr ng-repeat="entry in entries">
+		    <td>{{entry.id}}</td>
+			<td>{{entry.name}}</td>
+			<td>{{entry.email}}</td>
+			<td>{{entry.profession}}</td>
+	        <td>{{entry.location}}</td>
+			<td>{{entry.phone}}</td>
+	   </tr>
+    </table>
+  <input type="number" placeholder="Enter the id" ng-model="id">
+  <button ng-click="fetch()">put</button>
+  <table border="6" cellspacing="8" cellpadding="12" id="all-comments" style="color: red" >
+  	 <tr>
+  	 	  <th>id</th>
+		  <th>Name</th>
+		  <th>Email</th>
+		  <th>profession</th>
+		  <th>Location</th>
+		  <th>phone</th>
+		  <th>Tasks</th>
+	</tr>
+
+	<tr>
+		<td>{{person.id}}</td>
+		<td>{{person.name}}</td>
+		<td>{{person.email}}</td>
+		<td>{{person.profession}}</td>
+		<td>{{person.location}}</td>
+		<td>{{person.phone}}</td>
+		<td><button ng-click="edit()" style="color: red">Edit</button></td>
+		<td ><button ng-click="deleteComment()" style="color: red">Delete</button></td>
+    </tr>
+  </table>
+     <h3 style="color: blue">Edit the details of the Employee</h3>
+    <form style="padding: 4px solid green; margin: 4px; color: navy">
+		  id:<input type="number" ng-model="editperson.id"></td><br><br>
+		  Name:<input type="text" ng-model="editperson.name"></td><br><br>
+		  Email:<input type="text" ng-model="editperson.email"></td><br><br>
+		  profession:<input type="text" ng-model="editperson.profession"></td><br><br>
+		  Location:<input type="text" ng-model="editperson.location"></td><br><br>
+		  phone:<input type="number" ng-model="editperson.phone"></td><br><br>
+		  <button ng-click="update()">update</button>
+	 </form>
+
+  <h4 style="color: blue">Register the details of the Employee</h4>
+  Name:<input type="text" ng-model="name"><br><br>
+  Email:<input type="text"  ng-model="email"><br><br>
+  profession:<input type="text"  ng-model="profession"><br><br>
+  Location:<input type="text" ng-model="location"><br><br>
+  phone:<input type="number"  ng-model="phone"><br><br>
+ <button ng-click="post()">save</button>
+ </div>
+ </body>
+ </html>

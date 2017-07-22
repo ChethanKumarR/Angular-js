@@ -1,0 +1,76 @@
+{
+  "employees": [
+    {
+      "name": "Anil",
+      "email": "ani@gmail.com",
+      "location": "Hosur jammy",
+      "profession": "Doctor",
+      "phone": 9741,
+      "id": 1
+    },
+    {
+      "name": "sunil",
+      "email": "suni@gmail.com",
+      "location": "Hosur cb palli",
+      "profession": "Lecturer IT",
+      "phone": 99,
+      "id": 2
+    },
+    {
+      "name": "Asha23",
+      "email": "asha@gmail.com",
+      "profession": "Techie",
+      "location": "Hosur",
+      "phone": "97845",
+      "id": 3
+    },
+    {
+      "name": "Chethan Kumar",
+      "email": "wall@gmail.com",
+      "profession": "Software Engineer",
+      "location": "Bengaluru",
+      "phone": 97417,
+      "id": 4
+    },
+    {
+      "name": "Bindu",
+      "email": "chit@gmail.com",
+      "profession": "Techie",
+      "location": "Bengaluru",
+      "phone": 98454,
+      "id": 5
+    },
+    {
+      "name": "ashu",
+      "email": "ashu@gmail.com",
+      "profession": "web developer",
+      "location": "Bengaluru",
+      "phone": 9845,
+      "id": 6
+    },
+    {
+      "name": "Dravid",
+      "email": "walldravid@gmail.com",
+      "profession": "cricketer",
+      "location": "Bengaluru",
+      "phone": 98989898,
+      "id": 7
+    },
+    {
+      "name": "Wally",
+      "email": "Dependable",
+      "location": "Bengaluru",
+      "profession": "Cricketer",
+      "phone": 54784325,
+      "id": 8
+    },
+    {
+      "name": "sdf",
+      "email": "dsfbf",
+      "profession": "sdffd",
+      "location": "xcv",
+      "phone": 944455,
+      "id": 9
+    }
+  ]
+}
